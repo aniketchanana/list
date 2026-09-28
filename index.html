@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#115e59" />
+    <title>Expenses</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="summary">
+        <p class="eyebrow">Total</p>
+        <p id="total" class="total" aria-live="polite">0.00</p>
+      </header>
+
+      <form id="expense-form" class="entry">
+        <label class="field">
+          <span>Amount</span>
+          <input
+            id="amount"
+            name="amount"
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            placeholder="0.00"
+            required
+          />
+        </label>
+        <label class="field">
+          <span>Description <em>optional</em></span>
+          <input
+            id="description"
+            name="description"
+            type="text"
+            maxlength="140"
+            autocomplete="off"
+            placeholder="What was this for?"
+          />
+        </label>
+        <button type="submit">Add expense</button>
+        <p id="form-error" class="error" role="alert" hidden></p>
+      </form>
+
+      <section class="list-section" aria-labelledby="list-heading">
+        <h2 id="list-heading">Expenses</h2>
+        <p id="empty" class="empty">Nothing here yet. Add an amount above.</p>
+        <ul id="expense-list"></ul>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
