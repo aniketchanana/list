@@ -505,6 +505,23 @@ input:focus {
   }
 }
 
+@media (min-width: 960px) {
+  .app {
+    width: min(100% - 3rem, 68rem);
+  }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.92fr) minmax(20rem, 1.08fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .list-section {
+    margin-top: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
