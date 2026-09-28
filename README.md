@@ -10,10 +10,14 @@ python3 -m http.server 8765
 
 Then visit `http://localhost:8765`.
 
-## Phone link
+## Open it on your phone
 
-GitHub Pages serves this site at:
+The page is published with GitHub Pages from the `main` branch, root folder.
+
+1. Open this repository on GitHub and go to **Settings**, then **Pages**.
+2. Under **Build and deployment**, choose **Deploy from a branch**.
+3. Select branch **main** and folder **/ (root)**, then save.
+
+After GitHub finishes the first publish, open:
 
 https://aniketchanana.github.io/list/
-
-The repository has to be public, and Pages has to publish the `main` branch from the root folder (`/`).
