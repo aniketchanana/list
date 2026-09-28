@@ -3,18 +3,81 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#115e59" />
+    <meta name="theme-color" content="#0e7a62" />
     <title>Expenses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Outfit:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("expenses-theme");
+          var theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+          document.documentElement.style.colorScheme = theme;
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", theme === "dark" ? "#12110f" : "#0e7a62");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <main class="app">
-      <header class="summary">
-        <p class="eyebrow">Total</p>
-        <p id="total" class="total" aria-live="polite">0.00</p>
+      <header class="topbar">
+        <p class="brand">Expenses</p>
+        <p class="brand-sub">A running total of what you spend</p>
       </header>
 
-      <form id="expense-form" class="entry">
+      <section class="hero" aria-labelledby="total-label">
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="Switch to dark mode"
+        >
+          <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path
+              d="M12 2.5v2.2M12 19.3v2.2M4.7 4.7l1.6 1.6M17.7 17.7l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.7 19.3l1.6-1.6M17.7 6.3l1.6-1.6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+        <p id="total-label" class="eyebrow">Total spent</p>
+        <p id="total" class="total" aria-live="polite">0.00</p>
+        <p id="count" class="count">No expenses yet</p>
+      </section>
+
+      <form id="expense-form" class="card entry">
+        <div class="form-head">
+          <div>
+            <h2 id="form-heading">Add an expense</h2>
+            <p id="form-note" class="form-note">Amount is required. Description is optional.</p>
+          </div>
+          <button id="cancel-edit" class="btn btn-ghost" type="button" hidden>Cancel</button>
+        </div>
+
         <label class="field">
           <span>Amount</span>
           <input
@@ -35,17 +98,41 @@
             type="text"
             maxlength="140"
             autocomplete="off"
-            placeholder="What was this for?"
+            placeholder="Coffee, groceries, rent…"
           />
         </label>
-        <button type="submit">Add expense</button>
+        <button id="submit-btn" class="btn btn-primary" type="submit">
+          <svg class="icon icon-plus" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 5v14M5 12h14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+          <svg class="icon icon-check" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M20 6 9 17l-5-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span id="submit-label">Add expense</span>
+        </button>
         <p id="form-error" class="error" role="alert" hidden></p>
       </form>
 
       <section class="list-section" aria-labelledby="list-heading">
-        <h2 id="list-heading">Expenses</h2>
-        <p id="empty" class="empty">Nothing here yet. Add an amount above.</p>
-        <ul id="expense-list"></ul>
+        <h2 id="list-heading">History</h2>
+        <div id="empty" class="empty">
+          <p class="empty-title">Nothing here yet</p>
+          <p>Add an amount above and it will land in this list.</p>
+        </div>
+        <ul id="expense-list" class="list"></ul>
       </section>
     </main>
     <script src="app.js"></script>
